@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ETC_DIR="$(cd "$(dirname "$0")/../etc" && pwd)"
+
+for file in "$ETC_DIR"/* "$ETC_DIR"/.*; do
+    [ -e "$file" ] || continue
+    filename=$(basename "$file")
+    [ "$filename" = "." ] || [ "$filename" = ".." ] && continue
+    
+    ln -sf "$file" "$HOME/$filename"
+    echo "Link: ~/$filename"
+done
