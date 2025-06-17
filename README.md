@@ -8,7 +8,7 @@ Claude Code Config
 
 1. bin/setupを実行して下さい. homeからetc以下のファイルにsymlinkを貼ります
 
-2. ~/.gitignoreに以下を追記して下さい
+2. ~/.gitconfigに以下を追記して下さい
 
 ```
 [core]
