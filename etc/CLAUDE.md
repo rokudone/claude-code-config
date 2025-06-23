@@ -50,8 +50,8 @@
 ### 1. 計画と文書化
 - 実装計画ファイルがない場合は作業を認められない
   - 最初に実装計画が与えられていない場合は作成、そうでなければ更新
-  - 付随するドキュメントは.agent/plansにMarkdown作成(2025-01-01_10-00-00_hogehoge.md)
-  - 計画は.agent/plansにMarkdown作成(2025-01-01_10-00-00_hogehoge.md)
+  - 付随するドキュメントは.agent/plansにMarkdown作成(YYYY-MM-DD_HH-MM-SS_document_name.md)
+  - 計画は.agent/plansにMarkdown作成(YYYY-MM-DD_HH-MM-SS_feature_name.md)
   - チェックリスト形式で作業手順を書き出し、実作業ではそれにチェックを入れながら進める
 
 #### 実装計画の形式
