@@ -8,6 +8,10 @@ total_count=0
 # 詳細情報を格納
 details=""
 
+# 最大プロジェクト名長とGit情報長を格納
+max_project_len=0
+max_git_len=0
+
 # プロセスをチェック（pgrep -xで正確に"claude"のみ）
 for pid in $(pgrep -x claude | sort -u); do
     # ディレクトリを取得
@@ -39,35 +43,41 @@ for pid in $(pgrep -x claude | sort -u); do
         fi
     fi
     
-    # 状態判定と詳細作成
+    # プロジェクト名とGit情報の長さを個別に計算
+    project_len=${#project}
+    [ $project_len -gt $max_project_len ] && max_project_len=$project_len
+    git_len=${#git_info}
+    [ $git_len -gt $max_git_len ] && max_git_len=$git_len
+    
+    # 状態判定と詳細作成（一時的に保存）
     if [ "$cpu_int" -gt 1 ]; then
         ((active_count++))
-        details="${details}🔵 ${project}${git_info}\n"
+        details="${details}🔵|${project}|${git_info}|\n"
     else
         ((idle_count++))
-        # 待機時間を計算（簡易版）
+        # 待機時間を計算（簡暗版）
         idle_time_file="/tmp/claude-idle-$pid"
         if [ ! -f "$idle_time_file" ]; then
             date +%s > "$idle_time_file"
-            time_str=" (開始)"
+            time_str="(開始)"
         else
             start_time=$(cat "$idle_time_file")
             current_time=$(date +%s)
             idle_seconds=$((current_time - start_time))
             
             if [ $idle_seconds -lt 60 ]; then
-                time_str=" (${idle_seconds}s)"
+                time_str="(${idle_seconds}s)"
             elif [ $idle_seconds -lt 3600 ]; then
                 minutes=$((idle_seconds / 60))
                 seconds=$((idle_seconds % 60))
-                time_str=" (${minutes}m${seconds}s)"
+                time_str="(${minutes}m${seconds}s)"
             else
                 hours=$((idle_seconds / 3600))
                 minutes=$(((idle_seconds % 3600) / 60))
-                time_str=" (${hours}h${minutes}m)"
+                time_str="(${hours}h${minutes}m)"
             fi
         fi
-        details="${details}🔴 ${project}${time_str}${git_info}\n"
+        details="${details}🔴|${project}|${git_info}|${time_str}\n"
     fi
 done
 
@@ -98,9 +108,21 @@ else
     echo "Claude: 🔵${active_count} 🔴${idle_count}"
     echo "---"
     
-    # 詳細をアルファベット順に表示
-    echo -e "$details" | sort | while IFS= read -r line; do
-        [ -n "$line" ] && echo "$line"
+    # 最小幅を設定
+    [ $max_project_len -lt 20 ] && max_project_len=20
+    [ $max_git_len -lt 15 ] && max_git_len=15
+    
+    # 詳細をフォーマットして表示
+    echo -e "$details" | sort -t'|' -k2 | while IFS='|' read -r emoji project git_info time_str; do
+        if [ -n "$emoji" ]; then
+            # Git情報がない場合は空白で埋める
+            [ -z "$git_info" ] && git_info=" "
+            if [ -n "$time_str" ]; then
+                printf "%-2s %-${max_project_len}s %-${max_git_len}s %s\n" "$emoji" "$project" "$git_info" "$time_str"
+            else
+                printf "%-2s %-${max_project_len}s %s\n" "$emoji" "$project" "$git_info"
+            fi
+        fi
     done
     
     echo "---"

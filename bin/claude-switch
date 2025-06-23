@@ -41,8 +41,8 @@ for pid in $(pgrep -x claude | sort -u); do
         fi
     fi
     
-    # 配列に保存
-    process_list[$index]="${pid}|${tty}|${status_emoji}${project}${git_info}|${dir}"
+    # 配列に保存（ステータス絵文字、プロジェクト名、Git情報を分離）
+    process_list[$index]="${pid}|${tty}|${status_emoji}|${project}|${git_info}|${dir}"
     ((index++))
 done
 
@@ -52,13 +52,31 @@ if [ ${#process_list[@]} -eq 0 ]; then
     exit 1
 fi
 
+# 最大長を計算
+max_project_len=0
+max_git_len=0
+for item in "${process_list[@]}"; do
+    IFS='|' read -r pid tty emoji project git_info dir <<< "$item"
+    # プロジェクト名の長さを取得
+    project_len=${#project}
+    [ $project_len -gt $max_project_len ] && max_project_len=$project_len
+    # Git情報の長さを取得
+    git_len=${#git_info}
+    [ $git_len -gt $max_git_len ] && max_git_len=$git_len
+done
+
+# 最小幅を設定
+[ $max_project_len -lt 20 ] && max_project_len=20
+[ $max_git_len -lt 15 ] && max_git_len=15
+
 # fzf用の表示リストを作成
 display_list=""
 for i in "${!process_list[@]}"; do
-    IFS='|' read -r pid tty project dir <<< "${process_list[$i]}"
+    IFS='|' read -r pid tty emoji project git_info dir <<< "${process_list[$i]}"
     # ホームディレクトリからの相対パスに変換
     relative_dir="${dir/#$HOME/~}"
-    display_list="${display_list}$(printf "%-30s %s\n" "$project" "$relative_dir")"
+    # 絵文字とプロジェクト名を結合して表示
+    display_list="${display_list}$(printf "%s%-${max_project_len}s %-${max_git_len}s %s\n" "$emoji" "$project" "$git_info" "$relative_dir")"
     [ $i -lt $((${#process_list[@]} - 1)) ] && display_list="${display_list}\n"
 done
 
@@ -85,11 +103,11 @@ if [ -z "$selected" ]; then
     exit 0
 fi
 
-# 選択されたプロジェクト名を取得（Git情報を含む可能性がある）
-selected_project=$(echo "$selected" | awk '{print $1}')
+# 選択されたプロジェクト名を取得（絵文字の後の最初のフィールド）
+selected_project=$(echo "$selected" | sed 's/^[🔵🔴] *//' | awk '{print $1}')
 
 # 一時ファイルから該当する行を取得
-selected_line=$(grep -F "|$selected_project" "$temp_file" | head -1)
+selected_line=$(grep -F "|$selected_project|" "$temp_file" | head -1)
 
 # 選択された情報を解析
 if [ -z "$selected_line" ]; then
@@ -98,7 +116,7 @@ if [ -z "$selected_line" ]; then
 fi
 
 # TTYを取得
-IFS='|' read -r pid tty project dir <<< "$selected_line"
+IFS='|' read -r pid tty emoji project git_info dir <<< "$selected_line"
 
 # TTYからtmuxのペインIDを取得
 # TTYフォーマット: pts/N
