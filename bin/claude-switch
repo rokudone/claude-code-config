@@ -69,15 +69,22 @@ done
 [ $max_project_len -lt 20 ] && max_project_len=20
 [ $max_git_len -lt 15 ] && max_git_len=15
 
+# プロジェクト名でソート
+IFS=$'\n' sorted_list=($(printf '%s\n' "${process_list[@]}" | sort -t'|' -k4))
+
 # fzf用の表示リストを作成
 display_list=""
-for i in "${!process_list[@]}"; do
-    IFS='|' read -r pid tty emoji project git_info dir <<< "${process_list[$i]}"
+index=0
+total_sorted=${#sorted_list[@]}
+for item in "${sorted_list[@]}"; do
+    IFS='|' read -r pid tty emoji project git_info dir <<< "$item"
     # ホームディレクトリからの相対パスに変換
     relative_dir="${dir/#$HOME/~}"
     # 絵文字とプロジェクト名を結合して表示
     display_list="${display_list}$(printf "%s%-${max_project_len}s %-${max_git_len}s %s\n" "$emoji" "$project" "$git_info" "$relative_dir")"
-    [ $i -lt $((${#process_list[@]} - 1)) ] && display_list="${display_list}\n"
+    # 最後の要素でない場合は改行を追加
+    ((index++))
+    [ $index -lt $total_sorted ] && display_list="${display_list}\n"
 done
 
 # プロセス情報を一時ファイルに保存

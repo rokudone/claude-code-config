@@ -1,2 +1,3 @@
 etc/.claude/*
 !etc/.claude/commands/
+!etc/.claude/setting.json
