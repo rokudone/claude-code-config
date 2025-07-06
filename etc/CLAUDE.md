@@ -10,10 +10,10 @@
 
 ## 1. Design Doc必須（Google式）
 - **実装計画ファイルがない場合は作業を認められない**
-- 実装前に必ず`.agent/plans/`に設計文書作成
-- 日本語で可能な限り詳細に記載する
+- 実装前に必ず`$(git rev-parse --show-toplevel)/.agent/plans/`に設計文書を作成
+- 作業内容が変わったら作成した設計文書を更新
 - ファイル名：`YYYY-MM-DD_HH-MM-SS_feature.md`
-- 完成したら `cursor` コマンドを用いて Design Docを表示すること
+- 作成・更新したら `cursor` コマンドを用いて Design Docを表示すること
 
 ## 2. TDD徹底（t_wada方式）
 - 1ファイル実装 → テスト作成 → GREEN → 次へ
