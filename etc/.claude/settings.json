@@ -1,5 +1,4 @@
 {
-  "model": "opus",
   "permissions": {
     "allow": [
       "Read(**)",
@@ -19,9 +18,7 @@
       "Todoread",
       "Todowrite",
       "Agent(*)",
-
       "Bash(git:*)",
-
       "Bash(docker-compose:*)",
       "Bash(docker compose:*)",
       "Bash(docker ps:*)",
@@ -30,7 +27,6 @@
       "Bash(docker exec:*)",
       "Bash(docker stats:*)",
       "Bash(docker inspect:*)",
-
       "Bash(ls:*)",
       "Bash(cat:*)",
       "Bash(head:*)",
@@ -43,13 +39,11 @@
       "Bash(more:*)",
       "Bash(wc:*)",
       "Bash(diff:*)",
-
       "Bash(npm:*)",
       "Bash(yarn:*)",
       "Bash(npx:*)",
       "Bash(pnpm:*)",
       "Bash(bun:*)",
-
       "Bash(cd:*)",
       "Bash(pwd)",
       "Bash(echo:*)",
@@ -60,21 +54,16 @@
       "Bash(touch:*)",
       "Bash(cp:*)",
       "Bash(mv:*)",
-
       "Bash(open:*)",
       "Bash(pbcopy)",
       "Bash(pbpaste)",
       "Bash(qlmanage:*)",
-
       "Bash(make:*)",
-
       "Bash(tail -f log:*)",
       "Bash(tail -f tmp:*)",
-
       "Bash(ps aux:*)",
       "Bash(lsof -i:*)",
       "Bash(netstat:*)",
-
       "Bash(sed:*)",
       "Bash(awk:*)",
       "Bash(cut:*)",
@@ -82,35 +71,28 @@
       "Bash(uniq:*)",
       "Bash(jq:*)",
       "Bash(yq:*)",
-
       "Bash(tar -czf:*)",
       "Bash(tar -xzf:*)",
       "Bash(tar -tzf:*)",
       "Bash(zip -r:*)",
       "Bash(unzip:*)",
-
       "Bash(df:*)",
       "Bash(du:*)",
-
       "Bash(echo $path)",
       "Bash(echo $shell)",
       "Bash(echo $user)",
       "Bash(echo $home)",
       "Bash(echo $pwd)",
-
       "Bash(jest:*)",
       "Bash(mocha:*)",
       "Bash(cypress:*)",
-
       "Bash(rm tmp:*)",
       "Bash(rm log:*)",
       "Bash(rm coverage:*)",
       "Bash(rm node_modules/.cache:*)",
       "Bash(find:*)",
       "Bash(rm -i:*)",
-
       "Bash(cursor)",
-
       "mcp__figma__get_figma_data",
       "mcp__figma__download_figma_images",
       "voicevox:text_to_speech",
@@ -123,103 +105,86 @@
       "Create(**/.env)",
       "Write(**/.env)",
       "Multiedit(**/.env)",
-
       "Read(**/config/settings.yml)",
       "Edit(**/config/settings.yml)",
       "Create(**/config/settings.yml)",
       "Write(**/config/settings.yml)",
       "Multiedit(**/config/settings.yml)",
-
       "Read(**/config/secrets.yml)",
       "Edit(**/config/secrets.yml)",
       "Create(**/config/secrets.yml)",
       "Write(**/config/secrets.yml)",
       "Multiedit(**/config/secrets.yml)",
-
       "Read(**/config/credentials.yml.enc)",
       "Edit(**/config/credentials.yml.enc)",
       "Create(**/config/credentials.yml.enc)",
       "Write(**/config/credentials.yml.enc)",
       "Multiedit(**/config/credentials.yml.enc)",
-
       "Read(**/.aws/**)",
       "Edit(**/.aws/**)",
       "Create(**/.aws/**)",
       "Write(**/.aws/**)",
       "Multiedit(**/.aws/**)",
-
       "Read(**/.ssh/**)",
       "Edit(**/.ssh/**)",
       "Create(**/.ssh/**)",
       "Write(**/.ssh/**)",
       "Multiedit(**/.ssh/**)",
-
       "Read(**/.gnupg/**)",
       "Edit(**/.gnupg/**)",
       "Create(**/.gnupg/**)",
       "Write(**/.gnupg/**)",
       "Multiedit(**/.gnupg/**)",
-
       "Read(**/private/**)",
       "Edit(**/private/**)",
       "Create(**/private/**)",
       "Write(**/private/**)",
       "Multiedit(**/private/**)",
-
       "Read(**/secrets/**)",
       "Edit(**/secrets/**)",
       "Create(**/secrets/**)",
       "Write(**/secrets/**)",
       "Multiedit(**/secrets/**)",
-
       "Read(**/*.pem)",
       "Edit(**/*.pem)",
       "Create(**/*.pem)",
       "Write(**/*.pem)",
       "Multiedit(**/*.pem)",
-
       "Read(**/*.key)",
       "Edit(**/*.key)",
       "Create(**/*.key)",
       "Write(**/*.key)",
       "Multiedit(**/*.key)",
-
       "Read(**/*.p12)",
       "Edit(**/*.p12)",
       "Create(**/*.p12)",
       "Write(**/*.p12)",
       "Multiedit(**/*.p12)",
-
       "Read(**/*.pfx)",
       "Edit(**/*.pfx)",
       "Create(**/*.pfx)",
       "Write(**/*.pfx)",
       "Multiedit(**/*.pfx)",
-
       "Read(**/*.jks)",
       "Edit(**/*.jks)",
       "Create(**/*.jks)",
       "Write(**/*.jks)",
       "Multiedit(**/*.jks)",
-
       "Read(**/*.keystore)",
       "Edit(**/*.keystore)",
       "Create(**/*.keystore)",
       "Write(**/*.keystore)",
       "Multiedit(**/*.keystore)",
-
       "Read(**/*.asc)",
       "Edit(**/*.asc)",
       "Create(**/*.asc)",
       "Write(**/*.asc)",
       "Multiedit(**/*.asc)",
-
       "Read(**/*.gpg)",
       "Edit(**/*.gpg)",
       "Create(**/*.gpg)",
       "Write(**/*.gpg)",
       "Multiedit(**/*.gpg)",
-
       "Bash(printenv)",
       "Bash(env)",
       "Bash(set)",
@@ -234,7 +199,6 @@
       "Bash(echo:*database_*)",
       "Bash(echo:*api*)",
       "Bash(export:*)",
-
       "Bash(docker rm -f:*)",
       "Bash(docker rmi -f:*)",
       "Bash(docker system prune:*)",
@@ -242,27 +206,23 @@
       "Bash(docker volume prune:*)",
       "Bash(docker network rm:*)",
       "Bash(docker container prune:*)",
-
       "Bash(rm -rf:*)",
       "Bash(rm -r:*)",
       "Bash(rm:*/*)",
       "Bash(rm:*~/*)",
       "Bash(dd:*)",
       "Bash(shred:*)",
-
       "Bash(sudo:*)",
       "Bash(su:*)",
       "Bash(doas:*)",
       "Bash(chmod:*)",
       "Bash(chown:*)",
       "Bash(chgrp:*)",
-
       "Bash(ssh:*)",
       "Bash(scp:*)",
       "Bash(sftp:*)",
       "Bash(mssh:*)",
       "Bash(msftp:*)",
-
       "Bash(curl:*)",
       "Bash(wget:*)",
       "Bash(fetch:*)",
@@ -290,7 +250,6 @@
       "Bash(killall:*)",
       "Bash(pkill:*)",
       "Bash(kill -9:*)",
-
       "Bash(csrutil:*)",
       "Bash(nvram:*)",
       "Bash(pmset:*)",
@@ -298,18 +257,15 @@
       "Bash(launchctl:*)",
       "Bash(spctl:*)",
       "Bash(security:*)",
-
       "Bash(aws:*)",
       "Bash(gcloud:*)",
       "Bash(az:*)",
       "Bash(heroku:*)",
       "Bash(fly:*)",
-
       "Bash(*production:*)",
       "Bash(rails_env=production:*)",
       "Bash(node_env=production:*)",
       "Bash(docker exec:*rails_env=production*)",
-
       "Bash(npm:*-g*)",
       "Bash(npm:*--global*)",
       "Bash(yarn global:*)",
@@ -318,20 +274,17 @@
       "Bash(bun:*-g*)",
       "Bash(bun:*--global*)",
       "Bash(npx --package=:*-g*)",
-
       "Bash(gem install:*)",
       "Bash(rbenv install:*)",
       "Bash(rvm install:*)",
       "Bash(bundle install --system:*)",
       "Bash(bundle config system:*)",
-
       "Bash(pip install:*)",
       "Bash(pip3 install:*)",
       "Bash(pipx install:*)",
       "Bash(easy_install:*)",
       "Bash(conda install:*)",
       "Bash(poetry add:*)",
-
       "Bash(brew:*)",
       "Bash(apt:*)",
       "Bash(apt-get:*)",
@@ -343,7 +296,6 @@
       "Bash(pacman:*)",
       "Bash(zypper:*)",
       "Bash(apk:*)",
-
       "Bash(cargo install:*)",
       "Bash(go install:*)",
       "Bash(go get:*)",
@@ -353,5 +305,6 @@
       "Bash(stack install:*)",
       "Bash(luarocks install:*)"
     ]
-  }
+  },
+  "model": "opus"
 }
