@@ -1,105 +1,105 @@
-# Claude Code Review Command
+# Claude コードレビューコマンド
 
-## Purpose
-Perform a comprehensive code review autonomously, identifying potential issues and suggesting improvements.
+## 目的
+包括的なコードレビューを自律的に実行し、潜在的な問題を特定して改善案を提案する。
 
-## Instructions
-When this command is invoked, you should:
+## 指示
+このコマンドが実行される際、以下を行う：
 
-1. **Identify Review Scope**
-   - Determine which files need review (modified files, new files, or specified files)
-   - Use git status and git diff to identify changes if not specified
-   - Focus on code changes rather than documentation unless specifically requested
+1. **レビュー範囲の特定**
+   - レビューが必要なファイルを決定（変更されたファイル、新規ファイル、または指定されたファイル）
+   - 指定がない場合はgit statusとgit diffを使用して変更を特定
+   - 特別な要求がない限り、ドキュメントよりもコードの変更に焦点を当てる
 
-2. **Review Categories**
-   Analyze each file for:
+2. **レビューカテゴリ**
+   各ファイルについて以下を分析：
    
-   **Code Quality**
-   - Logic errors or potential bugs
-   - Edge case handling
-   - Error handling and validation
-   - Code duplication
-   - Dead code or unused variables
+   **コード品質**
+   - ロジックエラーや潜在的なバグ
+   - エッジケースの処理
+   - エラーハンドリングとバリデーション
+   - コードの重複
+   - デッドコードや未使用変数
    
-   **Security**
-   - Potential security vulnerabilities
-   - Input validation issues
-   - Authentication/authorization concerns
-   - Sensitive data exposure
-   - SQL injection, XSS, or other injection risks
+   **セキュリティ**
+   - 潜在的なセキュリティ脆弱性
+   - 入力検証の問題
+   - 認証・認可の懸念事項
+   - 機密データの露出
+   - SQLインジェクション、XSS、その他のインジェクションリスク
    
-   **Performance**
-   - Inefficient algorithms or data structures
-   - N+1 query problems
-   - Memory leaks or excessive memory usage
-   - Unnecessary computations
+   **パフォーマンス**
+   - 非効率なアルゴリズムやデータ構造
+   - N+1クエリ問題
+   - メモリリークや過剰なメモリ使用
+   - 不要な計算処理
    
-   **Maintainability**
-   - Code clarity and readability
-   - Naming conventions
-   - Function/method complexity
-   - Proper abstractions
-   - Documentation needs
+   **保守性**
+   - コードの明確性と可読性
+   - 命名規則
+   - 関数・メソッドの複雑さ
+   - 適切な抽象化
+   - ドキュメント化の必要性
    
-   **Best Practices**
-   - Language-specific idioms and conventions
-   - Framework best practices
-   - Testing coverage suggestions
-   - Design pattern opportunities
+   **ベストプラクティス**
+   - 言語固有のイディオムと慣例
+   - フレームワークのベストプラクティス
+   - テストカバレッジの提案
+   - デザインパターンの活用機会
 
-3. **Output Format**
-   Structure your review as follows:
+3. **出力形式**
+   レビューを以下のように構成：
    
    ```markdown
-   # Code Review Report
+   # コードレビューレポート
    
-   ## Summary
-   [Brief overview of reviewed files and overall assessment]
+   ## 概要
+   [レビューしたファイルの簡潔な概要と全体的な評価]
    
-   ## Critical Issues 🚨
-   [Issues that must be fixed before proceeding]
+   ## 重大な問題 🚨
+   [進行前に修正が必要な問題]
    
-   ## Important Suggestions ⚠️
-   [Strongly recommended improvements]
+   ## 重要な提案 ⚠️
+   [強く推奨される改善点]
    
-   ## Minor Improvements 💡
-   [Nice-to-have enhancements]
+   ## 軽微な改善点 💡
+   [あると良い拡張機能]
    
-   ## Positive Aspects ✅
-   [Well-implemented features or good practices observed]
+   ## 良い点 ✅
+   [よく実装された機能や観察された良いプラクティス]
    
-   ## File-by-File Review
+   ## ファイル別レビュー
    
-   ### [filename]
-   - **Issue**: [description]
-     - **Location**: [file:line]
-     - **Severity**: [Critical/High/Medium/Low]
-     - **Suggestion**: [how to fix]
+   ### [ファイル名]
+   - **問題**: [説明]
+     - **場所**: [ファイル:行番号]
+     - **重要度**: [重大/高/中/低]
+     - **提案**: [修正方法]
    ```
 
-4. **Review Process**
-   - Start by understanding the context and purpose of changes
-   - Review in order of importance: critical security/logic issues first
-   - Provide actionable feedback with specific examples
-   - Suggest concrete improvements, not just identify problems
-   - Balance criticism with recognition of good practices
+4. **レビュープロセス**
+   - 変更の文脈と目的を理解することから開始
+   - 重要度順にレビュー：重大なセキュリティ・ロジック問題を最優先
+   - 具体的な例を使用して実行可能なフィードバックを提供
+   - 問題の特定だけでなく、具体的な改善案を提案
+   - 批判と良いプラクティスの認識のバランスを取る
 
-5. **Special Considerations**
-   - For new features: verify completeness and edge cases
-   - For refactoring: ensure behavior preservation
-   - For bug fixes: confirm the fix addresses root cause
-   - For performance improvements: validate the optimization
+5. **特別な考慮事項**
+   - 新機能：完全性とエッジケースを検証
+   - リファクタリング：動作の保持を確認
+   - バグ修正：修正が根本原因に対処していることを確認
+   - パフォーマンス改善：最適化を検証
 
-## Example Usage
+## 使用例
 ```
-# Review all modified files
+# すべての変更されたファイルをレビュー
 /review
 
-# Review specific files
+# 特定のファイルをレビュー
 /review src/api/users.ts src/utils/validation.ts
 
-# Review with focus area
+# 焦点領域を指定してレビュー
 /review --focus security
 ```
 
-Remember: Be thorough but constructive. The goal is to improve code quality while maintaining developer productivity.
+注意：徹底的であると同時に建設的であること。目標は開発者の生産性を維持しながらコード品質を向上させることである。

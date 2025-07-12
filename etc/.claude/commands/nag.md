@@ -1,4 +1,5 @@
-# Nag
+# 小言を言います
 
-I'm going to nag you now.
-Read ~/CLAUDE.md and reconsider your current actions. Are you trying to work on something outside of the implementation plan? Or are you trying to proceed to the next step without running tests?
+一度手を止めて、CLAUDE.mdを読んでください。
+その内容と自分がやっていることを比べて報告してください。
+
