@@ -95,9 +95,14 @@
       "Bash(cursor)",
       "mcp__figma__get_figma_data",
       "mcp__figma__download_figma_images",
-      "voicevox:text_to_speech",
-      "playwright:browser_take_screenshot",
-      "o3:o3-search"
+      "mcp__voicevox__text_to_speech",
+      "mcp__o3__o3-search",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_tab_new",
+      "mcp__playwright__browser_tab_select",
+      "mcp__playwright__browser_close"
     ],
     "deny": [
       "Read(**/.env)",
