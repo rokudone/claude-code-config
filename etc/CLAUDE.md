@@ -21,7 +21,7 @@
 
 ### Stage 0: 準備
 - 最初にgit rev-parse --show-toplevelでプロジェクトルート確認
-- $PROJECT_ROOT/.agent/plans/(date +"%Y-%m-%d_%H-%M-%S")-feature_name ディレクトリを作成
+- $PROJECT_ROOT/.agent/specs/(date +"%Y-%m-%d_%H-%M-%S")-{feature_name} ディレクトリを作成
 - 以下ファイルを作成するときはこのディレクトリの中に作成する
 
 ### Stage 1: 要件定義ステージ（Joel Spolsky式 + EARS表記法）
@@ -29,18 +29,21 @@
 - spec.md ファイルを作成する
 
 ### Gate 1: 要件定義承認ゲート
+- spec.mdファイルのレビューを受ける
 
 ### Stage 2: 設計ステージ（Joel Spolsky式）
 - Taskツールを用いて並列に調査を行う
 - spec.mdをベースにdesign.md ファイルを作成する
 
 ### Gate 2: 設計承認ゲート
+- design.mdファイルのレビューを受ける
 
 ### Stage 3: 設計ステージ（Joel Spolsky式）
 - Taskツールを用いて並列に調査を行う
 - spec.md, design.mdをベースにtasks.mdを作成する
 
 ### Gate 3: 設計承認ゲート
+- tasks.mdファイルのレビューを受ける
 
 ### Stage 4: 実装（Kent Beck式TDD）
 - spec.md, design.md, tasks.mdを元に実装を開始する
