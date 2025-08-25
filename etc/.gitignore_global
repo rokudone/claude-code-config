@@ -17,3 +17,5 @@ CLAUDE.local.md
 CLAUDE/
 .claude/*
 !**/claude-code-config/etc/.claude
+.serena/*
+# .agent/*

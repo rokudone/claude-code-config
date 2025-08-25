@@ -51,6 +51,7 @@
       "Bash(type:*)",
       "Bash(whereis:*)",
       "Bash(mkdir:*)",
+      "Bash(mkdir -p:*)",
       "Bash(touch:*)",
       "Bash(cp:*)",
       "Bash(mv:*)",
@@ -83,6 +84,7 @@
       "Bash(echo $user)",
       "Bash(echo $home)",
       "Bash(echo $pwd)",
+      "Bash(vitest:*)",
       "Bash(jest:*)",
       "Bash(mocha:*)",
       "Bash(cypress:*)",
@@ -93,11 +95,12 @@
       "Bash(find:*)",
       "Bash(rm -i:*)",
       "Bash(cursor)",
+      "Bash(ccnvr:*)",
       "Bash(detect_mcp_nvim_step1.sh)",
       "Bash(detect_mcp_nvim_step2.sh)",
       "Bash(./bin/detect_mcp_nvim_step1.sh)",
       "Bash(./bin/detect_mcp_nvim_step2.sh)",
-      "Bash(nvr)",
+      "Bash(nvr:*)",
       "mcp__ide__getDiagnostics",
       "mcp__figma__get_figma_data",
       "mcp__figma__download_figma_images",
@@ -108,7 +111,13 @@
       "mcp__playwright__browser_click",
       "mcp__playwright__browser_tab_new",
       "mcp__playwright__browser_tab_select",
-      "mcp__playwright__browser_close"
+      "mcp__playwright__browser_close",
+      "mcp__serena__list_dir",
+      "mcp__serena__list_memories",
+      "mcp__serena__initial_instructions",
+      "mcp__serena__check_onboarding_performed",
+      "mcp__serena__onboarding",
+      "mcp__serena__get_current_config"
     ],
     "deny": [
       "Read(**/.env)",
@@ -317,5 +326,47 @@
       "Bash(luarocks install:*)"
     ]
   },
-  "model": "opus"
+  "model": "opus",
+  "env": {
+    "BASH_DEFAULT_TIMEOUT_MS": "300000",
+    "BASH_MAX_TIMEOUT_MS": "1500000"
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -lc ~/bin/cc-ding.sh notification"
+          },
+          {
+            "type": "command",
+            "command": "bash -lc ~/bin/cc-ding.sh stop"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|Create",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat > /tmp/hook_stdin.json && jq -r '.tool_response.file_path // .tool_input.file_path // empty' /tmp/hook_stdin.json | while read f; do [ -n \"$f\" ] && perl -i -pe 's/^[ \\t]+$//' \"$f\"; done"
+          }
+        ]
+      }
+    ]
+  },
+  "context": {
+    "autoInclude": false
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "/Users/takuma/.claude/statusline-command.sh"
+  },
+  "feedbackSurveyState": {
+    "lastShownTime": 1753951538746
+  }
 }
