@@ -120,6 +120,8 @@
       "mcp__serena__get_current_config"
     ],
     "deny": [
+      "Bash(git checkout:*)",
+      "Bash(git restore:*)",
       "Read(**/.env)",
       "Edit(**/.env)",
       "Create(**/.env)",
@@ -336,10 +338,6 @@
       {
         "matcher": "",
         "hooks": [
-          {
-            "type": "command",
-            "command": "bash -lc ~/bin/cc-ding.sh notification"
-          },
           {
             "type": "command",
             "command": "bash -lc ~/bin/cc-ding.sh stop"

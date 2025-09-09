@@ -1,10 +1,13 @@
 # 🟢🟡🔴Stage-Gate Process🟢🟡🔴
 
+## タスク
+
+追って指示をだします。その指示に対して、以下の手順で作業を進めなさい。
+
 ## 概要と全体原則
 
 Stage-Gate Process は、検証主義（憶測ではなく検証する）に基づく段階的な開発手法です。
-- 各Stageで成果物を作成し、Gateでレビューを受ける
-- Gateステップでは `exit_plan_mode` ツールを実行して計画承認を得る
+各Stageで成果物を作成し、Gateでレビューを受ける
 
 ## 標準Gateプロセス
 
@@ -19,15 +22,19 @@ Stage-Gate Process は、検証主義（憶測ではなく検証する）に基�
 
 - ユーザーがClaude Codeに対して、実行したいタスクの概要を伝える
 - `git rev-parse --show-toplevel` でプロジェクトルート確認
-- specディレクトリを作成
+- specディレクトリを作成する
     - ステップ1 まず date コマンドで時刻を取得
         - `date +"%Y-%m-%d_%H-%M-%S"`
     - ステップ2 その結果を使って mkdir -p を実行
         - `mkdir -p /path/to/.agent/specs/2025-08-20_14-45-58-feature-name/`
-
   - mkdir -p はパイプで繋がず必ず単独で実行すること
 - mkdir -p はパイプで繋がず必ず単独で実行すること そうしないと余計な確認が挟まります
 - 動的な値は先に取得してから使うこと そうしないと余計な確認が挟まります
+
+### Gate 0: 準備フェーズ
+- 以下が完了させ、ユーザに次のフェーズに進む承認をもらう
+    - ユーザから適切なヒアリングができている
+    - ディレクトリが作れている
 
 ### Stage 1: spec.md作成ステージ
 
@@ -50,9 +57,16 @@ Stage-Gate Process は、検証主義（憶測ではなく検証する）に基�
 #### 受け入れ基準
 1. テンプレート管理インターフェースにアクセスしたとき、システムは新しいテンプレートを作成するオプションを提供する
 2. 新しいテンプレートを作成するとき、システムは初期タスク、プロジェクト構造、設定を定義できるようにする
+
+## 参考ファイル
+
+- 事前調査ファイル: /hoge/fuga/piyo.md
+- 実装の参考にするファイル: /foo/bar/some.rb
+- ...
 ```
 
 ### Gate 1: spec.md承認ステージ
+spec.mdを作成していることを確認し、そのファイルのレビューを依頼する
 標準Gateプロセスを実施（spec.mdのレビュー）
 
 ### Stage 2: design.md作成ステージ
@@ -63,32 +77,32 @@ Stage-Gate Process は、検証主義（憶測ではなく検証する）に基�
 - spec.mdをベースに「design.md」ファイルを作成
 
 #### design.mdの例
-```markdown
+````markdown
 # 設計書
 
 ## 概要
 プロジェクトテンプレートシステムの強化により、テンプレート管理の改善を実現します。
 
 ## アーキテクチャ
-\```
+```
 UI Layer
 ├── ProjectTemplateManager.tsx (専用ポップアップ)
 ├── TemplateEditModal.tsx (新規作成)
 └── TaskColumn.tsx (横スクロール対応)
-\```
+```
 
 ## 主要コンポーネント
 ### 1. ProjectTemplateManager.tsx
-\```typescript
+```typescript
 interface ProjectTemplateManagerProps {
   onApplyTemplate: (projectName: string, templateId: string) => void;
   isOpen: boolean;
   onClose: () => void;
 }
-\```
-```
+````
 
 ### Gate 2: design.md承認ステージ
+design.mdを作成していることを確認し、そのファイルのレビューを依頼する
 標準Gateプロセスを実施（design.mdのレビュー）
 
 ### Stage 3: tasks.md作成ステージ
@@ -112,6 +126,7 @@ interface ProjectTemplateManagerProps {
 ```
 
 ### Gate 3: tasks.md承認ステージ
+tasks.mdを作成していることを確認し、そのファイルのレビューを依頼する
 標準Gateプロセスを実施（tasks.mdのレビュー）
 
 ### Stage 4: 実装ステージ（Kent Beck式TDD）
@@ -148,3 +163,7 @@ interface ProjectTemplateManagerProps {
 状態: {未着手|進行中|完了}
 次: {具体的なアクション}
 ```
+
+## 最後に
+
+追って指示をだします。まだ作業をしないでください。

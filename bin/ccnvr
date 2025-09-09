@@ -3,8 +3,9 @@
 # ccnvr - スマートなnvr (Neovim Remote) ラッパー
 # 優先順位:
 # 1. tmuxの同一ペイン内かつ同一ディレクトリ
-# 2. tmuxの同一セッション内かつ同一ディレクトリ  
-# 3. 同一ディレクトリ内（任意のnvimインスタンス）
+# 2. tmuxの同一ウィンドウ内かつ同一ディレクトリ
+# 3. tmuxの同一セッション内かつ同一ディレクトリ  
+# 4. 同一ディレクトリ内（任意のnvimインスタンス）
 
 set -euo pipefail
 
@@ -37,7 +38,7 @@ open_file() {
     exit 0
 }
 
-# 同一ディレクトリのnvimを探す（優先順位3）
+# 同一ディレクトリのnvimを探す（優先順位4）
 find_same_dir_nvim() {
     for socket in $(get_nvim_sockets); do
         [ -z "$socket" ] && continue
@@ -45,11 +46,16 @@ find_same_dir_nvim() {
     done
 }
 
-# tmuxペインとセッションをチェック（優先順位1,2）
+# tmuxペイン、ウィンドウ、セッションをチェック（優先順位1,2,3）
 find_tmux_nvim() {
     local current_pane=$(tmux display-message -p '#{pane_pid}')
+    local current_window=$(tmux display-message -p '#{window_id}')
     local current_session=$(tmux display-message -p '#S')
+    local window_match=""
     local session_match=""
+
+    # 同一ウィンドウ内のすべてのペインPIDを取得
+    local window_pane_pids=$(tmux list-panes -t "$current_window" -F '#{pane_pid}' | paste -sd '|' -)
 
     for socket in $(get_nvim_sockets); do
         [ -z "$socket" ] && continue
@@ -63,11 +69,24 @@ find_tmux_nvim() {
             open_file "$socket" "$@"
         fi
 
-        # 優先順位2: 同一セッション候補を記録
+        # 優先順位2: 同一ウィンドウ内の他のペイン
+        for pane_pid in $(echo "$window_pane_pids" | tr '|' ' '); do
+            if pgrep -P "$pane_pid" 2>/dev/null | grep -q "^${pid}$"; then
+                window_match="$socket"
+                break
+            fi
+        done
+
+        # 優先順位3: 同一セッション候補を記録
         [[ "$socket" == *"$current_session"* ]] && session_match="$socket"
     done
 
-    # 優先順位2: 同一セッション
+    # 優先順位2: 同一ウィンドウ
+    if [ -n "$window_match" ]; then
+        open_file "$window_match" "$@"
+    fi
+
+    # 優先順位3: 同一セッション
     if [ -n "$session_match" ]; then
         open_file "$session_match" "$@"
     fi
@@ -75,10 +94,10 @@ find_tmux_nvim() {
 
 # メイン処理
 main() {
-    # tmux環境なら優先順位1,2をチェック
+    # tmux環境なら優先順位1,2,3をチェック
     [ -n "${TMUX:-}" ] && find_tmux_nvim "$@"
 
-    # 優先順位3: 同一ディレクトリのnvim
+    # 優先順位4: 同一ディレクトリのnvim
     find_same_dir_nvim "$@"
 
     echo "適切なnvimインスタンスが見つかりません" >&2
