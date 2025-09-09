@@ -1,0 +1,22 @@
+# https://qiita.com/oga_aiichiro/items/303da2779ea26b173947#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E4%B8%80%E8%A6%A7
+
+model = "gpt-5"
+
+approval_policy = "on-failure"
+# - untrusted:  "信頼できる" コマンド (ls, cat, sed など) のみを実行し、ユーザー承認を求めない
+# - on-failure: すべてのコマンドを実行時にユーザー承認を求めない
+# - on-request: モデルがユーザー承認を求めるタイミングを決定する
+# - never:      ユーザー承認を決して求めない
+
+sandbox_mode = "workspace-write"
+# - 種類: read-only（読み取りのみ）、workspace-write（ワークスペース内のみ書き込み可）、danger-full-access（制限なし）。
+# - 現在: workspace-write。
+# - 影響: ワークスペース配下は作成/更新可（apply_patch や shell 経由）、ワークスペース外への書き込みは禁止。破壊的なシステム変更は不可。
+
+model_reasoning_effort = "medium"
+model_reasoning_summary = "auto"
+network_access = "enabled"
+# - restricted: 外部アクセス不可（curl/npm install 等は不可）。ローカル作業中心。
+# - enabled: 外部アクセス可（許可された範囲で取得/送信が可能）。
+
+notify = ["bash", "-lc", "~/bin/cc-ding.sh stop"]

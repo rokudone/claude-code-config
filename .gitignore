@@ -3,3 +3,4 @@ etc/.claude/*
 !etc/.claude/settings.json
 etc/.codex/*
 !etc/.codex/prompts
+!etc/.codex/config.template.toml
