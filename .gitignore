@@ -1,6 +1,9 @@
 etc/.claude/*
 !etc/.claude/commands/
+etc/.claude/commands/v2*
 !etc/.claude/settings.json
 etc/.codex/*
 !etc/.codex/prompts
 !etc/.codex/config.template.toml
+!etc/.codex/AGENTS.md
+!etc/.codex/docs
