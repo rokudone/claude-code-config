@@ -1,6 +1,6 @@
 etc/.claude/*
 !etc/.claude/commands/
-etc/.claude/commands/v2*
+etc/.claude/commands/*v2.md
 !etc/.claude/settings.json
 etc/.codex/*
 !etc/.codex/prompts

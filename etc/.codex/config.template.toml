@@ -4,191 +4,29 @@
 #  ~/.codex/config.toml (aka $CODEX_HOME/config.toml)
 # ============================================================================
 
-# ###################################
-# Root (top-level) keys
-# ###################################
-
-model = "gpt-5"                                # default model
+model = "gpt-5-codex"                                # default model
 approval_policy = "never"                  # "untrusted" | "on-failure" | "on-request" | "never"
 sandbox_mode = "danger-full-access"                      # "read-only" | "workspace-write" | "danger-full-access"
-# disable_response_storage = false                # set true for ZDR accounts
-#
 file_opener = "cursor"                          # "vscode" | "vscode-insiders" | "windsurf" | "cursor" | "none"
-# hide_agent_reasoning = false
-# show_raw_agent_reasoning = false
-#
 model_reasoning_effort = "high"               # "minimal" | "low" | "medium" | "high" | "none"
-# model_reasoning_summary = "auto"                # "auto" | "concise" | "detailed" | "none"
-# model_verbosity = "medium"                      # GPT‑5 family only; "low" | "medium" | "high"
-# model_supports_reasoning_summaries = false      # force-enable reasoning block
-#
-# chatgpt_base_url = "https://chatgpt.com/backend-api/"     # advanced
-# experimental_resume = "/abs/path/resume.jsonl"            # advanced
-# experimental_instructions_file = "/abs/path/base.txt"     # advanced
-# experimental_use_exec_command_tool = false                 # advanced
-# responses_originator_header_internal_override = "codex_cli_rs"  # internal/testing
-#
-# project_doc_max_bytes = 32768                    # bytes to read from AGENTS.md
-# preferred_auth_method = "chatgpt"                # or "apikey"
-#
-# profile = "default"                              # active [profiles] entry
-#
-# instructions = "You are a helpful assistant."    # extra system instructions (merged with AGENTS.md)
-#
-# notify = ["notify-send", "Codex"]                 # program argv; Codex appends JSON payload
 
-# ###################################
-# Tools (feature toggles)
-# ###################################
+notify = ["/bin/sh", "-c", "afplay /System/Library/Sounds/Funk.aiff"]
 
 [tools]
-# Enable the native Responses web_search tool (same as TUI --search)
 web_search = true
-# alias for backwards compatibility:
-# web_search_request = true
-
-# ###################################
-# Shell environment policy for spawned processes
-# ###################################
-
-# [shell_environment_policy]
-# inherit = "all"                  # "all" | "core" | "none"
-# ignore_default_excludes = false   # when false, drops vars whose NAMES contain KEY/SECRET/TOKEN
-# exclude = ["AWS_*", "AZURE_*"]   # case-insensitive globs
-# set = { CI = "1" }                # force-set values
-# include_only = ["PATH", "HOME"]   # keep-only whitelist (globs)
-# experimental_use_profile = false   # advanced
-
-# ###################################
-# Sandbox settings (apply when sandbox_mode = "workspace-write")
-# ###################################
-
-# [sandbox_workspace_write]
-# writable_roots = ["/additional/writable/path"]
-# network_access = false
-# exclude_tmpdir_env_var = false
-# exclude_slash_tmp = false
-
-# ###################################
-# History persistence
-# ###################################
 
 [history]
 persistence = "save-all"          # "save-all" | "none"
-# max_bytes = 10485760               # not strictly enforced yet
-
-# ###################################
-# MCP servers (tools via stdio)
-# ###################################
-
-# [mcp_servers.example]
-# command = "npx"
-# args = ["-y", "mcp-server-example"]
-# env = { API_KEY = "value" }
-
-# ###################################
-# Model providers (extend/override built-ins)
-# ###################################
-
-# Built-in OpenAI provider can be customized here.
-# [model_providers.openai]
-# name = "OpenAI"
-# base_url = "https://api.openai.com/v1"          # OPENAI_BASE_URL env var also supported
-# wire_api = "responses"                           # "responses" | "chat"
-# query_params = {}
-# http_headers = { version = "0.0.0" }
-# env_http_headers = { "OpenAI-Organization" = "OPENAI_ORGANIZATION", "OpenAI-Project" = "OPENAI_PROJECT" }
-# request_max_retries = 4
-# stream_max_retries = 5
-# stream_idle_timeout_ms = 300000
-# requires_openai_auth = true
-
-# Chat Completions-compatible provider example
-# [model_providers.openai-chat-completions]
-# name = "OpenAI using Chat Completions"
-# base_url = "https://api.openai.com/v1"
-# env_key = "OPENAI_API_KEY"
-# wire_api = "chat"
-# query_params = {}
-
-# Azure example (requires api-version)
-# [model_providers.azure]
-# name = "Azure"
-# base_url = "https://YOUR_PROJECT_NAME.openai.azure.com/openai"
-# env_key = "AZURE_OPENAI_API_KEY"
-# query_params = { api-version = "2025-04-01-preview" }
-
-# Local OSS (Ollama) example
-# [model_providers.ollama]
-# name = "Ollama"
-# base_url = "http://localhost:11434/v1"
-# wire_api = "chat"
-
-# ###################################
-# Profiles (bundled overrides you can switch with --profile)
-# ###################################
-
-# [profiles.default]
-# model = "gpt-5"
-# model_provider = "openai"
-# approval_policy = "never"
-# disable_response_storage = false
-# model_reasoning_effort = "high"
-# model_reasoning_summary = "auto"
-# model_verbosity = "medium"
-# chatgpt_base_url = "https://chatgpt.com/backend-api/"
-# experimental_instructions_file = "/abs/path/base_instructions.txt"
-
-# [profiles.zdr]
-# model = "o3"
-# model_provider = "openai"
-# approval_policy = "on-failure"
-# disable_response_storage = true
-
-# ###################################
-# Projects trust (per-absolute-path)
-# ###################################
-
-# [projects."/absolute/path/to/your/repo"]
-# trust_level = "trusted"    # mark as trusted
-
-# ###################################
-# Quick reference: CLI overrides (for sharing/docs)
-# ###################################
-# codex -c model="o3"
-# codex -c 'tools.web_search=true' "your prompt here"
-# codex --sandbox workspace-write --ask-for-approval on-request
-
-# Notes:
-# - The TUI flag --search maps to [tools].web_search in TOML.
-# - The built-in OpenAI provider also respects env: OPENAI_BASE_URL, OPENAI_ORGANIZATION, OPENAI_PROJECT.
-# - OSS provider can be influenced by env: CODEX_OSS_BASE_URL, CODEX_OSS_PORT (envs, not TOML).
-
-# NOTE: network_access is only valid under [sandbox_workspace_write].
-# When sandbox_mode="danger-full-access", network is already unrestricted.
-
-notify = ["bash", "-lc", "~/bin/cc-ding.sh stop"]
-
-[mcp_servers.serena]
-command = "uvx"
-args = ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--context", "codex"]
-
-[mcp_servers.playwright]
-command = "npx"
-args = ["@playwright/mcp@latest"]
-env = {}
 
 [mcp_servers.figma]
 command = "npx"
 args = ["figma-developer-mcp", "--stdio"]
 env = { FIGMA_API_KEY = "" }
 
-[mcp_servers.o3]
-command = "npx"
-args = ["o3-search-mcp"]
+[mcp_servers.serena]
+command = "uvx"
+args = ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--context", "codex"]
 
-[mcp_servers.o3.env]
-OPENAI_MODEL = "gpt-5"
-OPENAI_API_KEY = ""
-SEARCH_CONTEXT_SIZE = "medium"
-REASONING_EFFORT = "medium"
+[chrome-devtools]
+command = "npx"
+args = ["chrome-devtools-mcp@latest"]
